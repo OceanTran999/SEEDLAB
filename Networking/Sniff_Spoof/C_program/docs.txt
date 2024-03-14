@@ -1,0 +1,62 @@
+Available tutorials: 
+- http://www.tcpdump.org/pcap.htm
+- https://www.devdungeon.com/content/using-libpcap-c
+
+_ OPENING THE DEVICE FOR SNIFFING
+
+** pcap_t *pcap_open_live(char *device, int snaplen, int promisc, int to_ms, char *ebuf)
+    - device: name of device to capture packets.
+    - snaplen: maximum number of bytes to be capture.
+    - promisc: 
+        + If True (1): 
+            brings the interface into promiscuous mode.
+        + If False (0): 
+            it is possible under specific cases for the interface to be in promiscuous mode, anyway
+    - to_ms: time_out (milliseconds), 0 means no timeout.
+    - ebuf: a string store error messages
+
+
+_ FILTERING TRAFFIC
+    + We must compile textual expressions in to a filter program first.
+    + Then you can apply the filters to the pcap handle.
+
+
+Compile the expression
+    0: The expression should not be "optimized"
+    1: The expression should be "optimized"
+
+Function return:
+    -1: Failed
+    other values: Success
+
+** int pcap_compile(pcap_t *p, struct bpf_program *fp, char *str, int optimize, bpf_u_int32 netmask)
+    - p: session handle (pcap_t *handle)
+    - fp: a reference to the place will store the compiled version of our filter.
+    - str: expression
+    - optimize: an integer value decides if the expression should be "optimized" or not.
+    - netmask: specify network mask of the network the filter applies to.
+
+** int pcap_setfilter(pcap_t *p, struct bpf_program *fp)
+    - p: session handle (pcap_t *handle)
+    - fp: the compiled version of the expression
+
+
+_ THE ACTUAL SNIFFING
+
++ Capture a single packet
+** u_char *pcap_next(pcap_t *p, struct pcap_pkthdr *h)
+    - p: session handle (pcap_t *handle)
+    - h: a pointer to a structure that holds general info about the packet.
+
+_ pcap_pkthdr structure is defined as:
+    struct pcap_pkthdr {
+	struct timeval ts;      // time stamp
+	bpf_u_int32 caplen;     // length of portion present
+	bpf_u_int32 len;        // length this packet (off wire)
+    };
+
++ Using loop
+** int pcap_loop(pcap_t *p, int cnt, pcap_handler callback, u_char *user)
+    - p: session handle (pcap_t *handle).
+    - callback: Call back function.
+    - user: useful in some applications, but many times is simply set as NULL.
