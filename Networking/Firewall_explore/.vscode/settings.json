@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "kernel.h": "c",
+        "netfilter_ipv4.h": "c"
+    }
+}
