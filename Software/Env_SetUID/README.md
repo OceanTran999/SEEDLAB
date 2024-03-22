@@ -112,9 +112,9 @@
 ```
 
 ## References:
-[1] https://www.hackingarticles.in/linux-privilege-escalation-using-path-variable/
-[2] https://juggernaut-sec.com/capabilities/
-[3] https://steflan-security.com/linux-privilege-escalation-exploiting-capabilities/
-[4] https://man7.org/linux/man-pages/man7/capabilities.7.html
-[5] https://linux-audit.com/linux-capabilities-101/
-[6] https://book.hacktricks.xyz/linux-hardening/privilege-escalation/linux-capabilities#linux-capabilities
+- https://www.hackingarticles.in/linux-privilege-escalation-using-path-variable/
+- https://juggernaut-sec.com/capabilities/
+- https://steflan-security.com/linux-privilege-escalation-exploiting-capabilities/
+- https://man7.org/linux/man-pages/man7/capabilities.7.html
+- https://linux-audit.com/linux-capabilities-101/
+- https://book.hacktricks.xyz/linux-hardening/privilege-escalation/linux-capabilities#linux-capabilities
