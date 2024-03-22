@@ -93,7 +93,7 @@
 ```
 
 ## Task 9
-- We can write to the `/etc/zzz` file by abusing the Capability Leaking, using this:
+- We can write to the `/etc/zzz` file by abusing the Capability Leaking, it can be seen that the file descriptor `fd` of the vulnerable program is `3`, so we will use `echo` command to redirect the message we want to send to the vulnerable program using `>&`:
 
 ```console
     root@VM:/home/seed/Env_SetUID/Labsetup# cat /etc/zzz
