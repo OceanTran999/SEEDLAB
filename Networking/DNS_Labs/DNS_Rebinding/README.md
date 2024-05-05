@@ -40,13 +40,13 @@ ns      IN      A     10.9.0.153
 ```
 
 - Here's the result of **Task 2** and **Task 3**:
-* Task 2
+### Task 2
 
 ![Screenshot 2024-05-05 180906](https://github.com/OceanTran999/SEEDLAB/assets/100577019/8bb9b7f3-7173-4e5e-ba91-cc0977ed7ddc)
 
 ![Screenshot 2024-05-05 181038](https://github.com/OceanTran999/SEEDLAB/assets/100577019/c53485d1-99db-4ac9-b0b8-68e44c73cd56)
 
-* Task 3
+### Task 3
 
 ![Screenshot 2024-05-05 181054](https://github.com/OceanTran999/SEEDLAB/assets/100577019/a2c9328d-5dfd-4226-bae5-f1840f80302a)
 
